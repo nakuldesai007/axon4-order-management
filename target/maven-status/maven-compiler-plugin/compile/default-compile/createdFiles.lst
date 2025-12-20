@@ -1,7 +1,7 @@
-com/example/ordermanagement/command/ProcessOrderCommand.class
 com/example/ordermanagement/event/OrderCancelledEvent.class
-com/example/ordermanagement/handler/OrderEventHandler.class
+com/example/ordermanagement/command/ProcessOrderCommand.class
 com/example/ordermanagement/event/ItemAddedToOrderEvent.class
+com/example/ordermanagement/handler/OrderEventHandler.class
 com/example/ordermanagement/aggregate/Order.class
 com/example/ordermanagement/event/OrderCreatedEvent.class
 com/example/ordermanagement/aggregate/OrderStatusManager$OrderStatus.class
@@ -13,8 +13,8 @@ com/example/ordermanagement/query/OrderSummary$OrderStatus.class
 com/example/ordermanagement/aggregate/OrderItems.class
 com/example/ordermanagement/command/CreateOrderCommand.class
 com/example/ordermanagement/config/OpenApiConfig.class
-com/example/ordermanagement/command/AddItemToOrderCommand.class
 com/example/ordermanagement/command/CancelOrderCommand.class
+com/example/ordermanagement/command/AddItemToOrderCommand.class
 com/example/ordermanagement/event/DomainEvent.class
 com/example/ordermanagement/query/OrderSummaryRepository.class
 com/example/ordermanagement/aggregate/OrderStatusManager.class
