@@ -14,7 +14,9 @@
         "vscjava.vscode-java-debug",
         "vscjava.vscode-java-test",
         "vscjava.vscode-java-dependency",
-        "pivotal.vscode-boot-dev-pack"
+        "pivotal.vscode-boot-dev-pack",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
       ],
       "settings": {
         "java.configuration.updateBuildConfiguration": "automatic",
@@ -28,13 +30,13 @@
   "forwardPorts": [8080],
   "portsAttributes": {
     "8080": {
-      "label": "Spring Boot Application",
+      "label": "Full Stack Application",
       "onAutoForward": "notify"
     }
   },
 
-  "onCreateCommand": "sudo apt-get update && sudo apt-get install -y maven",
-  "postCreateCommand": "mvn clean install -DskipTests",
+  "onCreateCommand": "bash -c 'sudo apt-get update && sudo apt-get install -y maven && curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs'",
+  "postCreateCommand": "bash -c 'cd frontend && npm install && npm run build && cd .. && mvn clean install -DskipTests'",
   
   "remoteUser": "vscode",
   
