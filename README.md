@@ -8,6 +8,7 @@ A comprehensive e-commerce order management system built with **Axon Framework 4
 - **CQRS**: Command Query Responsibility Segregation with separate read/write models
 - **Order Lifecycle Management**: Full order lifecycle from creation to delivery
 - **RESTful API**: Comprehensive REST endpoints for all order operations
+- **Modern Web UI**: React-based frontend with intuitive order management interface
 - **Real-time Event Handling**: Event-driven architecture with immediate consistency
 - **H2 Database**: In-memory database with console access
 - **OpenAPI Documentation**: Auto-generated API documentation
@@ -66,6 +67,7 @@ src/main/java/com/example/ordermanagement/
 
 - **Java 17** or higher
 - **Maven 3.6** or higher
+- **Node.js 18+** and **npm** (for frontend development)
 
 ## 🚀 Getting Started
 
@@ -84,12 +86,36 @@ mvn spring-boot:run
 
 The application will start on `http://localhost:8080`
 
-### 3. Access H2 Console
+### 3. Build and Run the Frontend (Optional)
 
-- URL: `http://localhost:8080/h2-console`
-- JDBC URL: `jdbc:h2:mem:testdb`
-- Username: `sa`
-- Password: `password`
+For development with hot-reload:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will run on `http://localhost:3000` and proxy API requests to the backend.
+
+For production, build the frontend and it will be served by Spring Boot:
+
+```bash
+cd frontend
+npm install
+npm run build
+```
+
+After building, restart the Spring Boot application and access the UI at `http://localhost:8080`.
+
+### 4. Access the Web UI
+
+- **Web UI**: `http://localhost:8080` (after building frontend) or `http://localhost:3000` (dev mode)
+- **H2 Console**: `http://localhost:8080/h2-console`
+  - JDBC URL: `jdbc:h2:mem:testdb`
+  - Username: `sa`
+  - Password: `password`
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
 
 ## 📚 API Documentation
 
