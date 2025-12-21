@@ -23,3 +23,4 @@
 /workspaces/axon4-order-management/src/main/java/com/example/ordermanagement/controller/OrderController.java
 /workspaces/axon4-order-management/src/main/java/com/example/ordermanagement/command/CreateOrderCommand.java
 /workspaces/axon4-order-management/src/main/java/com/example/ordermanagement/event/OrderCreatedEvent.java
+/workspaces/axon4-order-management/src/main/java/com/example/ordermanagement/config/WebConfig.java

@@ -13,6 +13,8 @@ com/example/ordermanagement/query/OrderSummary$OrderStatus.class
 com/example/ordermanagement/aggregate/OrderItems.class
 com/example/ordermanagement/command/CreateOrderCommand.class
 com/example/ordermanagement/config/OpenApiConfig.class
+com/example/ordermanagement/config/WebConfig$ReactResourceResolver.class
+com/example/ordermanagement/config/WebConfig.class
 com/example/ordermanagement/command/CancelOrderCommand.class
 com/example/ordermanagement/command/AddItemToOrderCommand.class
 com/example/ordermanagement/event/DomainEvent.class

@@ -2,6 +2,7 @@ package com.example.ordermanagement.aggregate;
 
 import com.example.ordermanagement.event.OrderCancelledEvent;
 import com.example.ordermanagement.event.OrderConfirmedEvent;
+import com.example.ordermanagement.event.OrderCreatedEvent;
 import com.example.ordermanagement.event.OrderProcessedEvent;
 import com.example.ordermanagement.event.OrderShippedEvent;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -17,6 +18,12 @@ public class OrderStatusManager {
     private LocalDateTime updatedAt;
     
     // Event sourcing handlers for status-related events
+    @EventSourcingHandler
+    public void on(OrderCreatedEvent event) {
+        this.status = OrderStatus.CREATED;
+        this.updatedAt = event.getCreatedAt();
+    }
+    
     @EventSourcingHandler
     public void on(OrderConfirmedEvent event) {
         this.status = OrderStatus.CONFIRMED;

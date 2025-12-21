@@ -78,44 +78,78 @@ cd axon4-order-management
 mvn clean install
 ```
 
-### 2. Run the Application
+### 2. Run the Full Stack Application
 
+#### Option A: Quick Start (Production Mode) - Recommended for First Run
+
+This builds the frontend and runs everything together:
+
+```bash
+./start.sh
+# or
+./start.sh production
+```
+
+This will:
+- Build the frontend React app
+- Package the Spring Boot application with embedded frontend
+- Start everything on `http://localhost:8080`
+
+#### Option B: Development Mode (Hot Reload)
+
+For active development with hot reload on both frontend and backend:
+
+```bash
+./start-dev.sh
+# or
+./start.sh dev
+```
+
+This will:
+- Start Spring Boot backend on `http://localhost:8080`
+- Start Vite dev server on `http://localhost:3000` with hot reload
+- Frontend automatically proxies API calls to backend
+
+**Note:** In development mode, access the UI at `http://localhost:3000` (not 8080)
+
+#### Option C: Manual Setup
+
+**Backend only:**
 ```bash
 mvn spring-boot:run
 ```
 
-The application will start on `http://localhost:8080`
-
-### 3. Build and Run the Frontend (Optional)
-
-For development with hot-reload:
-
+**Frontend only (for development):**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-The frontend will run on `http://localhost:3000` and proxy API requests to the backend.
-
-For production, build the frontend and it will be served by Spring Boot:
-
+**Build frontend for production:**
 ```bash
 cd frontend
 npm install
 npm run build
+# Then restart Spring Boot - UI will be available at http://localhost:8080
 ```
 
-After building, restart the Spring Boot application and access the UI at `http://localhost:8080`.
+### 3. Access the Application
 
-### 4. Access the Web UI
-
-- **Web UI**: `http://localhost:8080` (after building frontend) or `http://localhost:3000` (dev mode)
+**Production Mode (after `./start.sh`):**
+- **Web UI**: `http://localhost:8080/`
+- **API**: `http://localhost:8080/api/orders`
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
 - **H2 Console**: `http://localhost:8080/h2-console`
   - JDBC URL: `jdbc:h2:mem:testdb`
   - Username: `sa`
   - Password: `password`
+
+**Development Mode (after `./start-dev.sh`):**
+- **Web UI**: `http://localhost:3000/` (with hot reload)
+- **Backend API**: `http://localhost:8080/api/orders`
 - **Swagger UI**: `http://localhost:8080/swagger-ui.html`
+- **H2 Console**: `http://localhost:8080/h2-console`
 
 ## 📚 API Documentation
 
