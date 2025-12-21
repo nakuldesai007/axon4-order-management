@@ -25,23 +25,26 @@ public class WebConfig implements WebMvcConfigurer {
 
     private static class ReactResourceResolver implements ResourceResolver {
         private static final String REACT_PATH = "/index.html";
-        private static final String API_PATH = "/api";
 
         @Override
         public Resource resolveResource(HttpServletRequest request, String requestPath,
                                        List<? extends Resource> locations, ResourceResolverChain chain) {
-            // Don't interfere with API requests
-            if (requestPath.startsWith(API_PATH)) {
+            // Don't interfere with API, Swagger, H2, or Actuator requests
+            if (requestPath.startsWith("/api") || 
+                requestPath.startsWith("/swagger-ui") || 
+                requestPath.startsWith("/v3/api-docs") ||
+                requestPath.startsWith("/h2-console") || 
+                requestPath.startsWith("/actuator")) {
                 return null;
             }
             
-            // Try to resolve the resource normally
+            // Try to resolve the resource normally (for static assets like JS, CSS)
             Resource resource = chain.resolveResource(request, requestPath, locations);
             if (resource != null && resource.exists()) {
                 return resource;
             }
             
-            // For non-API paths, return index.html for React Router
+            // For non-API paths that don't exist, return index.html for React Router
             return chain.resolveResource(request, REACT_PATH, locations);
         }
 

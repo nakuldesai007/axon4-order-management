@@ -1,8 +1,0 @@
-com/example/ordermanagement/cucumber/CucumberTestRunner.class
-com/example/ordermanagement/cucumber/CucumberSpringConfiguration.class
-com/example/ordermanagement/cucumber/OrderQuerySteps.class
-com/example/ordermanagement/cucumber/OrderCreationSteps.class
-com/example/ordermanagement/OrderIntegrationTest.class
-com/example/ordermanagement/cucumber/OrderItemManagementSteps.class
-com/example/ordermanagement/cucumber/OrderStatusWorkflowSteps.class
-com/example/ordermanagement/OrderManagementApplicationTests.class
