@@ -184,6 +184,31 @@ public class OrderController {
         return commandGateway.send(command);
     }
 
+    @PutMapping("/{orderId}/shipping-address")
+    @Operation(
+            summary = "Update shipping address",
+            description = "Updates the shipping address for an order that has not yet been shipped"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Shipping address updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data"),
+            @ApiResponse(responseCode = "404", description = "Order not found"),
+            @ApiResponse(responseCode = "409", description = "Order cannot be modified in current status")
+    })
+    public CompletableFuture<Void> updateShippingAddress(
+            @Parameter(description = "Order ID", required = true, example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable String orderId,
+            @Parameter(description = "New shipping address", required = true)
+            @RequestBody UpdateShippingAddressRequest request) {
+
+        UpdateShippingAddressCommand command = new UpdateShippingAddressCommand(
+                orderId,
+                request.getShippingAddress()
+        );
+
+        return commandGateway.send(command);
+    }
+
     @GetMapping("/{orderId}")
     @Operation(
         summary = "Get order by ID",
@@ -391,4 +416,19 @@ public class OrderController {
         public String getReason() { return reason; }
         public void setReason(String reason) { this.reason = reason; }
     }
-} 
+
+    @Schema(description = "Request to update the shipping address of an order")
+    public static class UpdateShippingAddressRequest {
+        @Schema(description = "The new shipping address", example = "456 Oak Ave, Town, State 67890", required = true)
+        private String shippingAddress;
+
+        // Getters and Setters
+        public String getShippingAddress() {
+            return shippingAddress;
+        }
+
+        public void setShippingAddress(String shippingAddress) {
+            this.shippingAddress = shippingAddress;
+        }
+    }
+}
