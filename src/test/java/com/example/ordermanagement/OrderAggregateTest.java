@@ -2,11 +2,15 @@ package com.example.ordermanagement;
 
 import com.example.ordermanagement.aggregate.Order;
 import com.example.ordermanagement.command.CreateOrderCommand;
+import com.example.ordermanagement.command.UpdateShippingAddressCommand;
 import com.example.ordermanagement.event.OrderCreatedEvent;
+import com.example.ordermanagement.event.OrderShippedEvent;
+import com.example.ordermanagement.event.ShippingAddressUpdatedEvent;
 import org.axonframework.eventhandling.EventMessage;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.BeforeEach;
+import static org.axonframework.test.matchers.Matchers.matches;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -271,6 +275,47 @@ class OrderAggregateTest {
                 .when(command)
                 .expectSuccessfulHandlerExecution()
                 .expectEvents(OrderCreatedEvent.class);
+    }
+
+    @Test
+    void testUpdateShippingAddress_WithValidCommand_ShouldPublishEvent() {
+        String orderId = "ORDER-010";
+        String initialAddress = "123 Main St";
+        String updatedAddress = "456 Oak Ave";
+
+        fixture.given(new OrderCreatedEvent(orderId, "CUST-010", "Test Customer", "test@test.com", initialAddress, LocalDateTime.now()))
+                .when(new UpdateShippingAddressCommand(orderId, updatedAddress))
+                .expectSuccessfulHandlerExecution()
+                .expectEventsMatching(matches(events -> {
+                    if (events.size() != 1) return false;
+                    EventMessage<?> eventMessage = (EventMessage<?>) events.get(0);
+                    Object payload = eventMessage.getPayload();
+                    if (!(payload instanceof ShippingAddressUpdatedEvent)) return false;
+                    ShippingAddressUpdatedEvent event = (ShippingAddressUpdatedEvent) payload;
+                    return orderId.equals(event.getOrderId()) &&
+                            updatedAddress.equals(event.getShippingAddress());
+                }));
+    }
+
+    @Test
+    void testUpdateShippingAddress_WhenOrderShipped_ShouldThrowException() {
+        String orderId = "ORDER-011";
+
+        fixture.given(
+                new OrderCreatedEvent(orderId, "CUST-011", "Test Customer", "test@test.com", "123 Main St", LocalDateTime.now()),
+                new OrderShippedEvent(orderId, "TRACKING-123", LocalDateTime.now())
+        )
+                .when(new UpdateShippingAddressCommand(orderId, "456 Oak Ave"))
+                .expectException(IllegalStateException.class);
+    }
+
+    @Test
+    void testUpdateShippingAddress_WithEmptyAddress_ShouldThrowException() {
+        String orderId = "ORDER-012";
+
+        fixture.given(new OrderCreatedEvent(orderId, "CUST-012", "Test Customer", "test@test.com", "123 Main St", LocalDateTime.now()))
+                .when(new UpdateShippingAddressCommand(orderId, ""))
+                .expectException(IllegalArgumentException.class);
     }
 }
 

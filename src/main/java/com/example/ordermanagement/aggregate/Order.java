@@ -156,6 +156,27 @@ public class Order {
         ));
     }
 
+    @CommandHandler
+    public void handle(UpdateShippingAddressCommand command) {
+        if (statusManager.isShipped() || statusManager.isCancelled()) {
+            throw new IllegalStateException("Cannot update shipping address for an order that is shipped or cancelled.");
+        }
+
+        if (command.getShippingAddress() == null || command.getShippingAddress().trim().isEmpty()) {
+            throw new IllegalArgumentException("Shipping address cannot be empty.");
+        }
+
+        if (command.getShippingAddress().equals(this.shippingAddress)) {
+            return;
+        }
+
+        publishEvent(new ShippingAddressUpdatedEvent(
+                orderId,
+                command.getShippingAddress(),
+                LocalDateTime.now()
+        ));
+    }
+
     // Common event publishing method
     private void publishEvent(DomainEvent event) {
         AggregateLifecycle.apply(event);
@@ -174,6 +195,11 @@ public class Order {
         // Initialize aggregate members
         this.orderItems = new OrderItems();
         this.statusManager = new OrderStatusManager();
+    }
+
+    @EventSourcingHandler
+    public void on(ShippingAddressUpdatedEvent event) {
+        this.shippingAddress = event.getShippingAddress();
     }
 
     // Getters

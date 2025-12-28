@@ -108,4 +108,15 @@ public class OrderEventHandler {
         
         orderSummaryRepository.save(orderSummary);
     }
-} 
+
+    @EventHandler
+    public void on(ShippingAddressUpdatedEvent event) {
+        OrderSummary orderSummary = orderSummaryRepository.findById(event.getOrderId())
+                .orElseThrow(() -> new RuntimeException("Order not found: " + event.getOrderId()));
+
+        orderSummary.setShippingAddress(event.getShippingAddress());
+        orderSummary.setUpdatedAt(event.getTimestamp());
+
+        orderSummaryRepository.save(orderSummary);
+    }
+}
