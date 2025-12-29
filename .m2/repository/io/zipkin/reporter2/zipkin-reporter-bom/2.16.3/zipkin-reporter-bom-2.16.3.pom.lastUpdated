@@ -1,7 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Sat Dec 20 22:35:55 UTC 2025
-@default-spring-release-https\://repo.spring.io/release/.lastUpdated=1766270155763
-https\://repo.maven.apache.org/maven2/.lastUpdated=1766270155895
-https\://repo.spring.io/snapshot/.error=
-https\://repo.spring.io/snapshot/.lastUpdated=1766270155843
-https\://repo.spring.io/release/.error=Could not transfer artifact io.zipkin.reporter2\:zipkin-reporter-bom\:pom\:2.16.3 from/to spring-release (https\://repo.spring.io/release)\: Authentication failed for https\://repo.spring.io/release/io/zipkin/reporter2/zipkin-reporter-bom/2.16.3/zipkin-reporter-bom-2.16.3.pom 401 Unauthorized
