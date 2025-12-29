@@ -167,7 +167,7 @@ class FullStackIntegrationTest {
 
     @Test
     @DisplayName("User creates and manages multiple orders")
-    void testMultipleOrders_UserManagesMultipleOrders() throws Exception {
+    void testMultipleOrders_UserManagesMultipleOrders() {
         // User creates first order
         String orderId1 = createOrder("CUST-FS-003", "Bob Wilson", "bob@example.com", "789 Pine Rd");
         addItemToOrder(orderId1, "PROD-004", "Tablet", 1, new BigDecimal("499.99"));
@@ -233,8 +233,9 @@ class FullStackIntegrationTest {
 
     @Test
     @DisplayName("Multiple users creating orders concurrently")
-    void testConcurrentOrderCreation() throws Exception {
+    void testConcurrentOrderCreation() throws InterruptedException, java.util.concurrent.ExecutionException, java.util.concurrent.TimeoutException {
         int numberOfUsers = 5;
+        @SuppressWarnings("unchecked")
         CompletableFuture<String>[] futures = new CompletableFuture[numberOfUsers];
 
         // Simulate multiple users creating orders simultaneously

@@ -343,10 +343,10 @@ public class OrderController {
     // Request/Response DTOs
     @Schema(description = "Request to create a new order")
     public static class CreateOrderRequest {
-        @Schema(description = "Customer ID", example = "CUST-001", required = true)
+        @Schema(description = "Customer ID", example = "CUST-001", requiredMode = Schema.RequiredMode.REQUIRED)
         private String customerId;
         
-        @Schema(description = "Customer name", example = "John Doe", required = true)
+        @Schema(description = "Customer name", example = "John Doe", requiredMode = Schema.RequiredMode.REQUIRED)
         private String customerName;
         
         @Schema(description = "Customer email", example = "john.doe@example.com")
@@ -371,16 +371,16 @@ public class OrderController {
 
     @Schema(description = "Request to add an item to an order")
     public static class AddItemRequest {
-        @Schema(description = "Product ID", example = "PROD-001", required = true)
+        @Schema(description = "Product ID", example = "PROD-001", requiredMode = Schema.RequiredMode.REQUIRED)
         private String productId;
         
-        @Schema(description = "Product name", example = "iPhone 15 Pro", required = true)
+        @Schema(description = "Product name", example = "iPhone 15 Pro", requiredMode = Schema.RequiredMode.REQUIRED)
         private String productName;
         
-        @Schema(description = "Quantity", example = "1", minimum = "1", required = true)
+        @Schema(description = "Quantity", example = "1", minimum = "1", requiredMode = Schema.RequiredMode.REQUIRED)
         private int quantity;
         
-        @Schema(description = "Product price", example = "999.99", minimum = "0.01", required = true)
+        @Schema(description = "Product price", example = "999.99", minimum = "0.01", requiredMode = Schema.RequiredMode.REQUIRED)
         private BigDecimal price;
 
         // Getters and Setters
@@ -399,7 +399,7 @@ public class OrderController {
 
     @Schema(description = "Request to ship an order")
     public static class ShipOrderRequest {
-        @Schema(description = "Tracking number", example = "TRK123456789", required = true)
+        @Schema(description = "Tracking number", example = "TRK123456789", requiredMode = Schema.RequiredMode.REQUIRED)
         private String trackingNumber;
 
         // Getters and Setters
@@ -409,7 +409,7 @@ public class OrderController {
 
     @Schema(description = "Request to cancel an order")
     public static class CancelOrderRequest {
-        @Schema(description = "Cancellation reason", example = "Customer requested cancellation", required = true)
+        @Schema(description = "Cancellation reason", example = "Customer requested cancellation", requiredMode = Schema.RequiredMode.REQUIRED)
         private String reason;
 
         // Getters and Setters
@@ -419,7 +419,7 @@ public class OrderController {
 
     @Schema(description = "Request to update the shipping address of an order")
     public static class UpdateShippingAddressRequest {
-        @Schema(description = "The new shipping address", example = "456 Oak Ave, Town, State 67890", required = true)
+        @Schema(description = "The new shipping address", example = "456 Oak Ave, Town, State 67890", requiredMode = Schema.RequiredMode.REQUIRED)
         private String shippingAddress;
 
         // Getters and Setters

@@ -265,7 +265,7 @@ class OrderE2ETest {
         
         // Wait for order details page
         wait.until(ExpectedConditions.urlContains("/orders/"));
-        String orderId = driver.getCurrentUrl().substring(driver.getCurrentUrl().lastIndexOf("/") + 1);
+
         
         // Step 2: Add item to order
         // Click "Add Item" button to show the form
@@ -280,32 +280,32 @@ class OrderE2ETest {
         // Find and fill item form fields (using input type and placeholder as selectors)
         List<WebElement> inputs = driver.findElements(By.cssSelector(".add-item-form input"));
         WebElement productIdField = inputs.stream()
-            .filter(e -> e.getAttribute("placeholder") != null && 
-                        e.getAttribute("placeholder").contains("PROD"))
+            .filter(e -> e.getDomAttribute("placeholder") != null && 
+                        e.getDomAttribute("placeholder").contains("PROD"))
             .findFirst()
             .orElseThrow(() -> new AssertionError("Product ID field not found"));
         productIdField.sendKeys("PROD-E2E-001");
         
         WebElement productNameField = inputs.stream()
-            .filter(e -> e.getAttribute("placeholder") != null && 
-                        e.getAttribute("placeholder").contains("iPhone"))
+            .filter(e -> e.getDomAttribute("placeholder") != null && 
+                        e.getDomAttribute("placeholder").contains("iPhone"))
             .findFirst()
             .orElseThrow(() -> new AssertionError("Product Name field not found"));
         productNameField.sendKeys("E2E Test Product");
         
         WebElement quantityField = inputs.stream()
-            .filter(e -> e.getAttribute("type") != null && 
-                        e.getAttribute("type").equals("number") &&
-                        e.getAttribute("min") != null)
+            .filter(e -> e.getDomAttribute("type") != null && 
+                        e.getDomAttribute("type").equals("number") &&
+                        e.getDomAttribute("min") != null)
             .findFirst()
             .orElseThrow(() -> new AssertionError("Quantity field not found"));
         quantityField.clear();
         quantityField.sendKeys("2");
         
         WebElement priceField = inputs.stream()
-            .filter(e -> e.getAttribute("type") != null && 
-                        e.getAttribute("type").equals("number") &&
-                        e.getAttribute("step") != null)
+            .filter(e -> e.getDomAttribute("type") != null && 
+                        e.getDomAttribute("type").equals("number") &&
+                        e.getDomAttribute("step") != null)
             .findFirst()
             .orElseThrow(() -> new AssertionError("Price field not found"));
         priceField.clear();
@@ -409,7 +409,7 @@ class OrderE2ETest {
         wait.until(ExpectedConditions.attributeContains(createdFilter, "class", "active"));
         
         // Verify filter is active
-        assertTrue(createdFilter.getAttribute("class").contains("active"),
+        assertTrue(createdFilter.getDomAttribute("class").contains("active"),
             "Created filter should be active");
         
         // Click on "All" filter
@@ -418,7 +418,7 @@ class OrderE2ETest {
         allFilter.click();
         
         wait.until(ExpectedConditions.attributeContains(allFilter, "class", "active"));
-        assertTrue(allFilter.getAttribute("class").contains("active"),
+        assertTrue(allFilter.getDomAttribute("class").contains("active"),
             "All filter should be active");
     }
 

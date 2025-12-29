@@ -23,8 +23,7 @@ public class OrderItemManagementSteps {
     @Autowired
     private OrderSummaryRepository orderSummaryRepository;
 
-    @Autowired
-    private CommandGateway commandGateway;
+
 
     private String orderId;
     private String productId;
@@ -32,7 +31,7 @@ public class OrderItemManagementSteps {
     private BigDecimal price;
     private int quantity;
     private Exception lastException;
-    private int expectedItemCount;
+
     private BigDecimal expectedTotal;
 
     @Before
@@ -40,7 +39,7 @@ public class OrderItemManagementSteps {
         // Clean up test data before each scenario
         orderSummaryRepository.deleteAll();
         lastException = null;
-        expectedItemCount = 0;
+
         expectedTotal = BigDecimal.ZERO;
     }
 
@@ -93,7 +92,7 @@ public class OrderItemManagementSteps {
             CompletableFuture<Void> future = orderController.addItemToOrder(orderId, request);
             future.get();
             
-            expectedItemCount++;
+
             expectedTotal = expectedTotal.add(price.multiply(BigDecimal.valueOf(quantity)));
         } catch (Exception e) {
             lastException = e;
@@ -127,7 +126,7 @@ public class OrderItemManagementSteps {
         try {
             CompletableFuture<Void> future = orderController.removeItemFromOrder(orderId, productId);
             future.get();
-            expectedItemCount--;
+
             expectedTotal = expectedTotal.subtract(price.multiply(BigDecimal.valueOf(quantity)));
         } catch (Exception e) {
             lastException = e;

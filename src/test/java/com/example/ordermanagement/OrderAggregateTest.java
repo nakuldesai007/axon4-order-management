@@ -14,7 +14,7 @@ import static org.axonframework.test.matchers.Matchers.matches;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,36 +27,7 @@ class OrderAggregateTest {
         fixture = new AggregateTestFixture<>(Order.class);
     }
 
-    // Helper method to verify OrderCreatedEvent properties (ignoring timestamp)
-    // Note: We verify events after expectEvents() call since timestamps are dynamic
-    private void verifyOrderCreatedEvent(OrderCreatedEvent event, String orderId, 
-                                        String customerId, String customerName, 
-                                        String customerEmail, String shippingAddress) {
-        assertEquals(orderId, event.getOrderId());
-        if (customerId == null) {
-            assertNull(event.getCustomerId());
-        } else {
-            assertEquals(customerId, event.getCustomerId());
-        }
-        if (customerName == null) {
-            assertNull(event.getCustomerName());
-        } else {
-            assertEquals(customerName, event.getCustomerName());
-        }
-        if (customerEmail == null) {
-            assertNull(event.getCustomerEmail());
-        } else {
-            assertEquals(customerEmail, event.getCustomerEmail());
-        }
-        if (shippingAddress == null) {
-            assertNull(event.getShippingAddress());
-        } else {
-            assertEquals(shippingAddress, event.getShippingAddress());
-        }
-        assertNotNull(event.getCreatedAt(), "Timestamp should be set by handler");
-        assertTrue(event.getCreatedAt().isAfter(LocalDateTime.now().minusSeconds(5)),
-                "Timestamp should be recent");
-    }
+
 
     @Test
     void testCreateOrder_WithValidCommand_ShouldPublishOrderCreatedEvent() {

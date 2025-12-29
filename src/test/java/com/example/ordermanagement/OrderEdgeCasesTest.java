@@ -12,6 +12,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -32,6 +34,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @DisplayName("Order Edge Cases and Boundary Conditions (Excel/CSV-driven)")
 class OrderEdgeCasesTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderEdgeCasesTest.class);
 
     private FixtureConfiguration<Order> fixture;
 
@@ -71,7 +75,7 @@ class OrderEdgeCasesTest {
             allTestCases = ExcelTestCaseReader.readTestCases("test-cases/multi-day-order-lifecycle.xlsx");
         } catch (Exception e) {
             // Fallback to CSV if Excel is not available
-            System.out.println("Excel file not found, using CSV: " + e.getMessage());
+            logger.info("Excel file not found, using CSV: {}", e.getMessage());
             allTestCases = CSVTestCaseReader.readTestCasesFromCSV("test-cases/multi-day-order-lifecycle.csv");
         }
         
@@ -156,10 +160,7 @@ class OrderEdgeCasesTest {
             
             // If exception message is specified, verify it
             if (expectedException.contains(":")) {
-                String expectedMessage = expectedException.substring(expectedException.indexOf(":") + 1).trim();
-                // Note: AggregateTestFixture doesn't support message verification directly
-                // This is a limitation we document
-            }
+
         } else {
             // Expect successful execution
             if (givenEvents.isEmpty() && "CREATE_ORDER".equals(action)) {
@@ -385,7 +386,7 @@ class OrderEdgeCasesTest {
      * so we must manually unpack them. This method handles arrays with more than 6 events
      * by extending the manual unpacking pattern or using reflection with proper varargs handling.
      */
-    @SuppressWarnings("unchecked")
+
     private Object callGivenWithMultipleEvents(DomainEvent[] eventsArray) {
         // Extend manual unpacking to handle more cases (up to 10 events)
         // This covers the vast majority of edge case test scenarios
@@ -518,8 +519,7 @@ class OrderEdgeCasesTest {
                         break;
                     default:
                         // Unknown key - log for debugging
-                        System.out.println("  Warning: Unknown expectedResult key '" + key + 
-                                "' - validation skipped in unit test context.");
+                        logger.warn("  Warning: Unknown expectedResult key '{}' - validation skipped in unit test context.", key);
                         break;
                 }
             }
@@ -527,9 +527,7 @@ class OrderEdgeCasesTest {
         
         // Log warning if expectedResult contains properties that can't be validated in unit tests
         if (hasUnvalidatableProperties) {
-            System.out.println("  Warning: expectedResult contains properties (itemCount, totalAmount, customerId) " +
-                    "that require aggregate state access. These are not validated in unit tests. " +
-                    "Use integration tests (MultiDayOrderLifecycleExcelTest) for full expectedResult validation.");
+            logger.warn("  Warning: expectedResult contains properties (itemCount, totalAmount, customerId) that require aggregate state access. These are not validated in unit tests. Use integration tests (MultiDayOrderLifecycleExcelTest) for full expectedResult validation.");
         }
     }
 

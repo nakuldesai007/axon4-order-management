@@ -26,8 +26,7 @@ class OrderControllerCreateOrderTest {
     @Autowired
     private OrderSummaryRepository orderSummaryRepository;
 
-    @Autowired
-    private CommandGateway commandGateway;
+
 
     @BeforeEach
     void setUp() {
@@ -35,7 +34,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithValidRequest_ShouldReturnOrderId() throws Exception {
+    void testCreateOrder_WithValidRequest_ShouldReturnOrderId() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-001");
         request.setCustomerName("John Doe");
@@ -51,7 +50,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithValidRequest_ShouldCreateOrderInRepository() throws Exception {
+    void testCreateOrder_WithValidRequest_ShouldCreateOrderInRepository() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-002");
         request.setCustomerName("Jane Smith");
@@ -75,7 +74,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithNullCustomerId_ShouldStillCreateOrder() throws Exception {
+    void testCreateOrder_WithNullCustomerId_ShouldStillCreateOrder() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId(null);
         request.setCustomerName("John Doe");
@@ -94,7 +93,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithNullCustomerName_ShouldStillCreateOrder() throws Exception {
+    void testCreateOrder_WithNullCustomerName_ShouldStillCreateOrder() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-003");
         request.setCustomerName(null);
@@ -113,7 +112,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithNullEmail_ShouldStillCreateOrder() throws Exception {
+    void testCreateOrder_WithNullEmail_ShouldStillCreateOrder() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-004");
         request.setCustomerName("John Doe");
@@ -132,7 +131,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithNullShippingAddress_ShouldStillCreateOrder() throws Exception {
+    void testCreateOrder_WithNullShippingAddress_ShouldStillCreateOrder() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-005");
         request.setCustomerName("John Doe");
@@ -151,7 +150,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithEmptyStrings_ShouldStillCreateOrder() throws Exception {
+    void testCreateOrder_WithEmptyStrings_ShouldStillCreateOrder() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("");
         request.setCustomerName("");
@@ -169,7 +168,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_MultipleOrders_ShouldCreateDifferentOrderIds() throws Exception {
+    void testCreateOrder_MultipleOrders_ShouldCreateDifferentOrderIds() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request1 = new OrderController.CreateOrderRequest();
         request1.setCustomerId("CUST-006");
         request1.setCustomerName("Customer One");
@@ -194,7 +193,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_WithSpecialCharacters_ShouldHandleCorrectly() throws Exception {
+    void testCreateOrder_WithSpecialCharacters_ShouldHandleCorrectly() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-007");
         request.setCustomerName("José O'Brien-Smith");
@@ -215,7 +214,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_VerifyOrderStatusIsCreated() throws Exception {
+    void testCreateOrder_VerifyOrderStatusIsCreated() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-008");
         request.setCustomerName("Test Customer");
@@ -232,7 +231,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_VerifyOrderHasNoItemsInitially() throws Exception {
+    void testCreateOrder_VerifyOrderHasNoItemsInitially() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-009");
         request.setCustomerName("Test Customer");
@@ -250,7 +249,7 @@ class OrderControllerCreateOrderTest {
     }
 
     @Test
-    void testCreateOrder_VerifyTimestampsAreSet() throws Exception {
+    void testCreateOrder_VerifyTimestampsAreSet() throws java.util.concurrent.ExecutionException, InterruptedException, java.util.concurrent.TimeoutException {
         OrderController.CreateOrderRequest request = new OrderController.CreateOrderRequest();
         request.setCustomerId("CUST-010");
         request.setCustomerName("Test Customer");

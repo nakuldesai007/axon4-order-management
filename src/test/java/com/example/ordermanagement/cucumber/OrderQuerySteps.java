@@ -25,25 +25,24 @@ public class OrderQuerySteps {
     @Autowired
     private OrderSummaryRepository orderSummaryRepository;
 
-    @Autowired
-    private CommandGateway commandGateway;
 
-    private String orderId;
-    private String customerId;
-    private String customerName;
-    private String status;
-    private BigDecimal minAmount;
+
+
+
+
+
+
     private ResponseEntity<OrderSummary> orderResponse;
     private List<OrderSummary> ordersResponse;
     private long countResponse;
     private ResponseEntity<BigDecimal> averageResponse;
-    private Exception lastException;
+
 
     @Before
     public void setUp() {
         // Clean up test data before each scenario
         orderSummaryRepository.deleteAll();
-        lastException = null;
+
         orderResponse = null;
         ordersResponse = null;
         countResponse = 0;
@@ -54,7 +53,7 @@ public class OrderQuerySteps {
     public void theOrderManagementSystemIsRunning() {
         assertNotNull(orderController);
         assertNotNull(orderSummaryRepository);
-        assertNotNull(commandGateway);
+
     }
 
     @Given("multiple orders exist in the system")
@@ -67,47 +66,47 @@ public class OrderQuerySteps {
 
     @Given("an order with ID {string} exists")
     public void anOrderWithIdExists(String orderId) {
-        this.orderId = orderId;
+
         createTestOrder("CUST-TEST", "Test Customer", "CREATED", orderId);
     }
 
     @Given("no order with ID {string} exists")
     public void noOrderWithIdExists(String orderId) {
-        this.orderId = orderId;
+
         // Ensure the order doesn't exist by not creating it
     }
 
     @Given("a customer with ID {string} has multiple orders")
     public void aCustomerWithIdHasMultipleOrders(String customerId) {
-        this.customerId = customerId;
+
         createTestOrder(customerId, "Test Customer 1", "CREATED");
         createTestOrder(customerId, "Test Customer 2", "CONFIRMED");
     }
 
     @Given("there are orders with status {string}")
     public void thereAreOrdersWithStatus(String status) {
-        this.status = status;
+
         createTestOrder("CUST-STATUS-1", "Status Customer 1", status);
         createTestOrder("CUST-STATUS-2", "Status Customer 2", status);
     }
 
     @Given("there are orders for customer {string}")
     public void thereAreOrdersForCustomer(String customerName) {
-        this.customerName = customerName;
+
         createTestOrder("CUST-NAME-1", customerName + " First", "CREATED");
         createTestOrder("CUST-NAME-2", customerName + " Second", "CONFIRMED");
     }
 
     @Given("there are orders with total amount greater than {bigdecimal}")
     public void thereAreOrdersWithTotalAmountGreaterThan(BigDecimal minAmount) {
-        this.minAmount = minAmount;
+
         createTestOrderWithAmount("CUST-AMOUNT-1", "Amount Customer 1", minAmount.add(BigDecimal.valueOf(50)));
         createTestOrderWithAmount("CUST-AMOUNT-2", "Amount Customer 2", minAmount.add(BigDecimal.valueOf(100)));
     }
 
     @Given("there are no orders with status {string}")
     public void thereAreNoOrdersWithStatus(String status) {
-        this.status = status;
+
         // Don't create any orders with this status
     }
 
@@ -116,7 +115,7 @@ public class OrderQuerySteps {
         try {
             orderResponse = orderController.getOrder(orderId);
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -125,7 +124,7 @@ public class OrderQuerySteps {
         try {
             ordersResponse = orderController.getAllOrders();
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -134,7 +133,7 @@ public class OrderQuerySteps {
         try {
             ordersResponse = orderController.getOrdersByCustomer(customerId);
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -143,7 +142,7 @@ public class OrderQuerySteps {
         try {
             ordersResponse = orderController.getOrdersByStatus(status);
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -152,7 +151,7 @@ public class OrderQuerySteps {
         try {
             ordersResponse = orderController.searchOrdersByCustomerName(customerName);
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -161,7 +160,7 @@ public class OrderQuerySteps {
         try {
             ordersResponse = orderController.getOrdersByMinAmount(minAmount);
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -170,7 +169,7 @@ public class OrderQuerySteps {
         try {
             countResponse = orderController.getOrderCountByStatus(status);
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -179,7 +178,7 @@ public class OrderQuerySteps {
         try {
             averageResponse = orderController.getAverageOrderValueByStatus(status);
         } catch (Exception e) {
-            lastException = e;
+            fail("Failed: " + e.getMessage());
         }
     }
 
@@ -204,7 +203,7 @@ public class OrderQuerySteps {
     @Then("a {int} error should be returned")
     public void aErrorShouldBeReturned(int errorCode) {
         assertNotNull(orderResponse);
-        assertEquals(errorCode, orderResponse.getStatusCodeValue());
+        assertEquals(errorCode, orderResponse.getStatusCode().value());
     }
 
     @Then("a list of orders should be returned")

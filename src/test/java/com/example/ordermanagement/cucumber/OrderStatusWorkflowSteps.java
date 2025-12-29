@@ -23,12 +23,11 @@ public class OrderStatusWorkflowSteps {
     @Autowired
     private OrderSummaryRepository orderSummaryRepository;
 
-    @Autowired
-    private CommandGateway commandGateway;
+
 
     private String orderId;
-    private String trackingNumber;
-    private String cancellationReason;
+
+
     private Exception lastException;
 
     @Before
@@ -145,7 +144,7 @@ public class OrderStatusWorkflowSteps {
 
     @When("I ship the order with tracking number {string}")
     public void iShipTheOrderWithTrackingNumber(String trackingNumber) {
-        this.trackingNumber = trackingNumber;
+
         try {
             OrderController.ShipOrderRequest request = new OrderController.ShipOrderRequest();
             request.setTrackingNumber(trackingNumber);
@@ -158,7 +157,7 @@ public class OrderStatusWorkflowSteps {
 
     @When("I cancel the order with reason {string}")
     public void iCancelTheOrderWithReason(String reason) {
-        this.cancellationReason = reason;
+
         try {
             OrderController.CancelOrderRequest request = new OrderController.CancelOrderRequest();
             request.setReason(reason);

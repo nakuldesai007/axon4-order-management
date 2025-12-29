@@ -1,7 +1,6 @@
 package com.example.ordermanagement.excel;
 
-import com.example.ordermanagement.excel.CSVTestCaseReader;
-import com.example.ordermanagement.excel.ExcelTestCaseReader;
+
 import com.example.ordermanagement.controller.OrderController;
 import com.example.ordermanagement.query.OrderSummary;
 import com.example.ordermanagement.query.OrderSummaryRepository;
@@ -12,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -43,8 +41,7 @@ class MultiDayOrderLifecycleExcelTest {
     @Autowired
     private OrderSummaryRepository orderSummaryRepository;
 
-    @Autowired
-    private OrderController orderController;
+
 
     private String baseUrl;
     private Map<String, String> testContext; // Store order IDs and other test data
@@ -255,7 +252,7 @@ class MultiDayOrderLifecycleExcelTest {
         ResponseEntity<String> response = restTemplate.postForEntity(
             baseUrl, request, String.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         String orderId = response.getBody();
         assertNotNull(orderId);
         
@@ -287,7 +284,7 @@ class MultiDayOrderLifecycleExcelTest {
         ResponseEntity<Void> response = restTemplate.postForEntity(
             baseUrl + "/" + orderId + "/items", request, Void.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         waitForEventProcessing();
         
         // Verify item was added
@@ -309,7 +306,7 @@ class MultiDayOrderLifecycleExcelTest {
             null,
             Void.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         waitForEventProcessing();
         
         System.out.println("    ✓ Item removed from order");
@@ -322,7 +319,7 @@ class MultiDayOrderLifecycleExcelTest {
         ResponseEntity<Void> response = restTemplate.postForEntity(
             baseUrl + "/" + orderId + "/confirm", null, Void.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         waitForEventProcessing();
         
         // Verify status
@@ -340,7 +337,7 @@ class MultiDayOrderLifecycleExcelTest {
         ResponseEntity<Void> response = restTemplate.postForEntity(
             baseUrl + "/" + orderId + "/process", null, Void.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         waitForEventProcessing();
         
         // Verify status
@@ -361,7 +358,7 @@ class MultiDayOrderLifecycleExcelTest {
         ResponseEntity<Void> response = restTemplate.postForEntity(
             baseUrl + "/" + orderId + "/ship", request, Void.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         waitForEventProcessing();
         
         // Verify status
@@ -383,7 +380,7 @@ class MultiDayOrderLifecycleExcelTest {
         ResponseEntity<Void> response = restTemplate.postForEntity(
             baseUrl + "/" + orderId + "/cancel", request, Void.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         waitForEventProcessing();
         
         // Verify status
@@ -401,7 +398,7 @@ class MultiDayOrderLifecycleExcelTest {
         ResponseEntity<OrderSummary> response = restTemplate.getForEntity(
             baseUrl + "/" + orderId, OrderSummary.class);
         
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         OrderSummary order = response.getBody();
         assertNotNull(order);
         

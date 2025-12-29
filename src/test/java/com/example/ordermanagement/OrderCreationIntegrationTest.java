@@ -1,19 +1,19 @@
 package com.example.ordermanagement;
 
 import com.example.ordermanagement.command.CreateOrderCommand;
-import com.example.ordermanagement.event.OrderCreatedEvent;
+
 import com.example.ordermanagement.query.OrderSummary;
 import com.example.ordermanagement.query.OrderSummaryRepository;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventBus;
-import org.axonframework.eventhandling.GenericDomainEventMessage;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
+
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -37,8 +37,7 @@ class OrderCreationIntegrationTest {
     @Autowired
     private OrderSummaryRepository orderSummaryRepository;
 
-    @Autowired
-    private EventBus eventBus;
+
 
     @BeforeEach
     void setUp() {
@@ -214,6 +213,7 @@ class OrderCreationIntegrationTest {
     @Test
     void testOrderCreation_ConcurrentOrders_ShouldAllSucceed() throws Exception {
         int numberOfConcurrentOrders = 10;
+        @SuppressWarnings("unchecked")
         CompletableFuture<String>[] futures = new CompletableFuture[numberOfConcurrentOrders];
         String[] orderIds = new String[numberOfConcurrentOrders];
 
