@@ -160,6 +160,7 @@ class OrderEdgeCasesTest {
             
             // If exception message is specified, verify it
             if (expectedException.contains(":")) {
+            }
 
         } else {
             // Expect successful execution
