@@ -1,2 +1,8 @@
 .m2/repository/
 target/
+.vscode
+.idea
+.classpath
+.project
+.settings
+.m2
