@@ -1,5 +1,7 @@
 package com.example.ordermanagement.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class ItemRemovedFromOrderEvent implements DomainEvent {
@@ -8,14 +10,10 @@ public class ItemRemovedFromOrderEvent implements DomainEvent {
     private final String productId;
     private final LocalDateTime removedAt;
 
-    // Default constructor for Jackson deserialization
-    public ItemRemovedFromOrderEvent() {
-        this.orderId = null;
-        this.productId = null;
-        this.removedAt = null;
-    }
-
-    public ItemRemovedFromOrderEvent(String orderId, String productId, LocalDateTime removedAt) {
+    @JsonCreator
+    public ItemRemovedFromOrderEvent(@JsonProperty("orderId") String orderId, 
+                                    @JsonProperty("productId") String productId, 
+                                    @JsonProperty("removedAt") LocalDateTime removedAt) {
         this.orderId = orderId;
         this.productId = productId;
         this.removedAt = removedAt;

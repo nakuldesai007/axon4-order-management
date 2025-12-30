@@ -1,5 +1,7 @@
 package com.example.ordermanagement.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,18 +14,13 @@ public class ItemAddedToOrderEvent implements DomainEvent {
     private final BigDecimal price;
     private final LocalDateTime addedAt;
 
-    // Default constructor for Jackson deserialization
-    public ItemAddedToOrderEvent() {
-        this.orderId = null;
-        this.productId = null;
-        this.productName = null;
-        this.quantity = 0;
-        this.price = null;
-        this.addedAt = null;
-    }
-
-    public ItemAddedToOrderEvent(String orderId, String productId, String productName, 
-                                int quantity, BigDecimal price, LocalDateTime addedAt) {
+    @JsonCreator
+    public ItemAddedToOrderEvent(@JsonProperty("orderId") String orderId, 
+                                @JsonProperty("productId") String productId, 
+                                @JsonProperty("productName") String productName, 
+                                @JsonProperty("quantity") int quantity, 
+                                @JsonProperty("price") BigDecimal price, 
+                                @JsonProperty("addedAt") LocalDateTime addedAt) {
         this.orderId = orderId;
         this.productId = productId;
         this.productName = productName;

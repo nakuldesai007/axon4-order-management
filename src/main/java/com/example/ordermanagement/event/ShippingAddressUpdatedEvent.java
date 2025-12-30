@@ -1,5 +1,7 @@
 package com.example.ordermanagement.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class ShippingAddressUpdatedEvent implements DomainEvent {
@@ -8,7 +10,10 @@ public class ShippingAddressUpdatedEvent implements DomainEvent {
     private final String shippingAddress;
     private final LocalDateTime updatedAt;
 
-    public ShippingAddressUpdatedEvent(String orderId, String shippingAddress, LocalDateTime updatedAt) {
+    @JsonCreator
+    public ShippingAddressUpdatedEvent(@JsonProperty("orderId") String orderId, 
+                                       @JsonProperty("shippingAddress") String shippingAddress, 
+                                       @JsonProperty("updatedAt") LocalDateTime updatedAt) {
         this.orderId = orderId;
         this.shippingAddress = shippingAddress;
         this.updatedAt = updatedAt;
